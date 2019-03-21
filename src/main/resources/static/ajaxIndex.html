@@ -35,6 +35,13 @@
         return flag;
     }
 
+    /*
+    详细参考链接：https://www.cnblogs.com/qiumingcheng/p/6854933.html
+    1.processData设置为false。因为data值是FormData对象，不需要对数据做处理。
+    2.<form>标签添加enctype="multipart/form-data"属性。
+    3.cache设置为false，上传文件不需要缓存。
+    4.contentType设置为false，不设置contentType值，因为是由<form>表单构造的FormData对象，且已经声明了属性enctype="multipart/form-data"，所以这里设置为false。
+    */
     function checkSubmit() {
         var formdata=new FormData();
         formdata.append('fileName',$('#filename').get(0).files[0]);
