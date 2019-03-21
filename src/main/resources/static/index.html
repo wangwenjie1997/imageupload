@@ -6,14 +6,18 @@
 </head>
 <body>
 <form action="imageUpload" method="post" enctype="multipart/form-data">
-    <input type="file" name="fileName" id="filename" accept="image/png, image/jpeg, image/jpg">
+    <input type="file" name="fileName" id="filename" accept="image/png, image/jpeg, image/jpg" onchange="checkImage()">
     <input type="button" id="submitBtn" onclick="checkSubmit()" value="上传"/>
 </form>
+
+<div id="onLoadImage"></div>
+
 </body>
 <script src="/webjars/jquery/3.3.1/jquery.min.js"></script>
 <script src="/webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 
+    //检查图片
     function checkImage() {
         var fileName=$("#filename").val();
         fileName=fileName.replace("C:\\fakepath\\","");
@@ -29,9 +33,28 @@
                 alert("图片大小不能超过100KB");
             }
         }
+        if(flag){
+            onLoadImage();
+        }
+        else{//清除input type=file的显示内容
+            $("#filename").val("");
+        }
         return flag;
     }
 
+    //预览图片
+    function onLoadImage() {
+        var file=$('#filename').get(0).files[0];
+        var reader = new FileReader();
+        //将文件以Data URL形式读入页面
+        reader.readAsDataURL(file);
+        reader.onload=function(e){
+            //显示文件
+            $("#onLoadImage").html('<img src="' + this.result +'" alt="" />');
+        }
+    }
+
+    //上传图片
     function checkSubmit() {
         if(checkImage())
             $("#submitBtn").attr('type','submit');
