@@ -73,7 +73,10 @@
             processData:false,//ajax上传图片需要添加
             success: function (data) {
                 if(data.hasOwnProperty("relativePath")){
-                    $("#showImage").html("<img src='"+data.relativePath+"'/>")
+                    $("#showImage").html("<img src='"+data.relativePath+"'/>");
+                }
+                else {
+                    $("#showImage").html("上传失败");
                 }
                 alert(data.result_msg);
             },

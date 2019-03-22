@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 public class ImageUploadController {
@@ -42,12 +43,16 @@ public class ImageUploadController {
             String fileType = file.getContentType();
             if (fileType.equals("image/jpeg") || fileType.equals("image/png") || fileType.equals("image/jpeg")) {
                 // 要上传的目标文件存放的绝对路径
-                //用src为保存绝对路径不能改名只能用原名，用原名会导致ajax上传图片后在前端显示时出现404错误-->原因未知
+                //用src为保存绝对路径不能改名只能用原名，不用原名会导致ajax上传图片后在前端显示时出现404错误-->原因未知
 //                String localPath="F:\\IDEAProject\\imageupload\\src\\main\\resources\\static\\img";
-                String localPath="F:\\IDEAProject\\imageupload\\target\\classes\\static\\img";
+                final String localPath="F:\\IDEAProject\\imageupload\\target\\classes\\static\\img";
                 //上传后保存的文件名(需要防止图片重名导致的文件覆盖)
-                String str = (new SimpleDateFormat("yyyyMMddHHmmssSSS")).format(new Date());
-                String fileName=str+file.getOriginalFilename();
+                //获取文件名
+                String fileName = file.getOriginalFilename();
+                //获取文件后缀名
+                String suffixName = fileName.substring(fileName.lastIndexOf("."));
+                //重新生成文件名
+                fileName = UUID.randomUUID()+suffixName;
                 if (FileUtils.upload(file, localPath, fileName)) {
                     //文件存放的相对路径(一般存放在数据库用于img标签的src)
                     String relativePath="img/"+fileName;
