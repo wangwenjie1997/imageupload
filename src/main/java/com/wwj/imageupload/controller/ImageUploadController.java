@@ -74,6 +74,13 @@ public class ImageUploadController {
         return root;
     }
 
+    /**
+     * 多图片上传
+     * 对应html:multipleIndex.html
+     * 对应URL:localhost:8080/multipleIndex.html
+     * @param files
+     * @return
+     */
     @RequestMapping("/multipleImageUpload")
     public List multipleImageUpload(@RequestParam("uploadFiles") MultipartFile[] files){
         System.out.println("上传的图片数："+files.length);
