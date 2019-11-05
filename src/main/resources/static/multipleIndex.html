@@ -16,15 +16,28 @@
 <script src="/webjars/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
 
+
     var curFiles = [];//文件数组，用来保存上传的文件信息
+
 
     //检查上传的图片
     function checkImage(obj) {
         var files = obj.files;
+
         if(files){
 
-            if(curFiles.length<3&&files.length<=3)//把一次上传图片数限制在3张
-                Array.prototype.push.apply(curFiles, files);//复制
+            if(files.length < 3) {//把一次上传图片数限制在3张
+                for (var i = 0; i < files.length; i++) {
+                    var item = files.item(i);
+                    var size = item.size;
+                    if (size / 1000 < 100) { //简易大小限制100K
+                        curFiles.push(item);
+                    }
+                    else {
+                        alert("第" + (i + 1) + "张图片过大");
+                    }
+                }
+            }
             else{
                 $("#filename").val("");
                 alert("一次最多上传3张图片");
@@ -47,11 +60,12 @@
         }
 
         //判断上传图片大小(100KB)
-        for(var i=0;i<curFiles.length-1;i++){
+        for(var i=0;i<curFiles.length;i++){
             var size = curFiles[i].size;
             if(size/1000>100){
-                curFiles.splice(i, 1)
+                curFiles.splice(i, 1);
             }
+
         }
 
         console.log(curFiles);
