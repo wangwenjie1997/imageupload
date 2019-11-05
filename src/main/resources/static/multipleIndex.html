@@ -60,7 +60,7 @@
         }
 
         //判断上传图片大小(100KB)
-        for(var i=0;i<curFiles.length;i++){
+        for(var i = 0; i < curFiles.length; i++){
             var size = curFiles[i].size;
             if(size/1000>100){
                 curFiles.splice(i, 1);
@@ -76,7 +76,7 @@
     //预览图片
     function onLoadImage() {
         $("#onLoadImage").html("");
-        for(var i =0; i<curFiles.length;i++){
+        for(var i = 0; i < curFiles.length; i++){
             (function(i){
                 var file = curFiles[i];
                 var reader = new FileReader();
