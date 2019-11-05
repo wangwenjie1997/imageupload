@@ -23,10 +23,10 @@
     //检查上传的图片
     function checkImage(obj) {
         var files = obj.files;
-
+        console.log(files.length);
         if(files){
 
-            if(files.length < 3) {//把一次上传图片数限制在3张
+            if(files.length <= 3) {//把一次上传图片数限制在3张
                 for (var i = 0; i < files.length; i++) {
                     var item = files.item(i);
                     var size = item.size;
